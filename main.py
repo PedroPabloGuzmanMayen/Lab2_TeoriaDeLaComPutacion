@@ -32,10 +32,21 @@ def transition(state, char, transitions):
 
 def final_state(state, word, transitions):
     for i in word:
-        state = transition(state, i, transitions )
+        state = transition(state, i, transitions)
 
     return state
 
 
-print(final_state("q0", "abaa", transiciones))
+#Función derivation
 
+def derivation(state, word, transitions):
+    register = []
+    for i in word:
+        register.append([state, i])
+        state = transition(state, i, transitions)
+        register[len(register)-1].append(state)
+
+    return register
+
+
+print(derivation("q0", "abba", transiciones))

@@ -17,16 +17,25 @@ def read_afd(filename):
 
 # Ruta del archivo JSON
 filename = 'afd.json'
-estados, simbolos, estado_inicial, estados_aceptacion, transiciones = read_afd(filename)
+states, alphabet, estado_inicial, estados_aceptacion, transiciones = read_afd(filename)
 
 #Función transition
 
-def transition(state, char, transitions, alphabet, states):
+def transition(state, char, transitions):
     if char not in alphabet or state not in states:
         return False
     else:
         next_state = next((transition["q_prime"] for transition in transitions if transition["q"] == state and transition["a"] == char))
         return next_state
     
-print(transition("q3", "a", transiciones, simbolos, estados))
+#Función final state
+
+def final_state(state, word, transitions):
+    for i in word:
+        state = transition(state, i, transitions )
+
+    return state
+
+
+print(final_state("q0", "abaa", transiciones))
 

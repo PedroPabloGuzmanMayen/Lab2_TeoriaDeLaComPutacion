@@ -15,9 +15,7 @@ def read_afd(filename):
 
     return estados, simbolos, estado_inicial, estados_aceptacion, transiciones
 
-# Ruta del archivo JSON
-filename = 'afd.json'
-states, alphabet, estado_inicial, estados_aceptacion, transiciones = read_afd(filename)
+
 
 #Función transition
 
@@ -49,9 +47,6 @@ def derivation(state, word, transitions):
     return register
 
 
-print(derivation("q0", "abba", transiciones))
-
-
 #Función de aceptación
 
 def accepted(state, word, finalStates, transitions):
@@ -61,4 +56,51 @@ def accepted(state, word, finalStates, transitions):
     else:
         return False
     
-print(accepted("q0", "abbaa", estados_aceptacion, transiciones))
+
+cond = True
+filename = input("Ingresa el nombre del archivo en donde está el autómata: ")
+states, alphabet, estado_inicial, estados_aceptacion, transiciones = read_afd(filename)
+
+while cond:
+    print()
+    print("1. Usar la función transición")
+    print("2. Determinar el estado final dada una cadena")
+    print("3. Obtener las transiciones dada una cadena")
+    print("4. Determinar si una cadena es aceptada")
+    print("5. Salir")
+
+    opt = int(input("¿Qué deseas hacer?"))
+
+    if opt == 1:
+        q = input("Ingresa el estado: ")
+        char = input("Ingresa el caracter: ")
+        print(transition(q, char, transiciones))
+    if opt == 2:
+        q = input("Ingresa el estado: ")
+        cadena = input("Ingresa la cadena: ")
+        print(final_state(q, cadena, transiciones))
+
+    if opt == 3:
+        q = input("Ingresa el estado: ")
+        cadena = input("Ingresa la cadena: ")
+        register = derivation(q, cadena, transiciones)
+        for i in register:
+            print(f"Desde {i[0]} con caracter {i[1]} hasta el estado {i[2]}")
+
+    if opt == 4:
+        q = input("Ingresa el estado: ")
+        cadena = input("Ingresa la cadena: ")
+        resultado = accepted(q, cadena, estados_aceptacion, transiciones)
+        if resultado == True:
+            print(f"La cadena {cadena} es aceptada ")
+        else:
+            print(f"La cadena {cadena} no es aceptada ")
+
+    if opt == 5:
+        cond = False
+
+
+
+
+
+

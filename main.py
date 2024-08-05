@@ -2,26 +2,31 @@
 import json
 
 #Función para leer archivos json con la estructura del autómata
-def leer_afd(ruta_archivo):
-    with open(ruta_archivo, 'r') as archivo:
-        afd = json.load(archivo)
+def read_afd(filename):
+    with open(filename, 'r') as file:
+        afd = json.load(file)
     
-    # Leer y mostrar los datos del autómata
+    # Leer los datos del autómata
     estados = afd.get('Q', [])
     simbolos = afd.get('Σ', [])
     estado_inicial = afd.get('q0', '')
     estados_aceptacion = afd.get('F', [])
     transiciones = afd.get('δ', [])
-    
-    print("Estados:", estados)
-    print("Símbolos:", simbolos)
-    print("Estado inicial:", estado_inicial)
-    print("Estados de aceptación:", estados_aceptacion)
-    
-    print("Transiciones:")
-    for transicion in transiciones:
-        print(f"δ({transicion['q']}, {transicion['a']}) = {transicion['q_prime']}")
+
+    return estados, simbolos, estado_inicial, estados_aceptacion, transiciones
 
 # Ruta del archivo JSON
-ruta_archivo = 'afd.json'
-leer_afd(ruta_archivo)
+filename = 'afd.json'
+estados, simbolos, estado_inicial, estados_aceptacion, transiciones = read_afd(filename)
+
+#Función transition
+
+def transition(state, char, transitions, alphabet, states):
+    if char not in alphabet or state not in states:
+        return False
+    else:
+        next_state = next((transition["q_prime"] for transition in transitions if transition["q"] == state and transition["a"] == char))
+        return next_state
+    
+print(transition("q3", "a", transiciones, simbolos, estados))
+

@@ -50,3 +50,15 @@ def derivation(state, word, transitions):
 
 
 print(derivation("q0", "abba", transiciones))
+
+
+#Función de aceptación
+
+def accepted(state, word, finalStates, transitions):
+    result = final_state(state, word, transitions)
+    if result in finalStates:
+        return True
+    else:
+        return False
+    
+print(accepted("q0", "abbaa", estados_aceptacion, transiciones))

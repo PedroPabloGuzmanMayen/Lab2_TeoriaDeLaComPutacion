@@ -1,2 +1,2 @@
 
-![My GIF](Lab2.gif)
+Laboratorio 2 del curso teoría de la computación
